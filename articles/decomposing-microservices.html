@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        
+        <!-- SEO Meta Tags -->
+        <meta name="description" content="Deepanshu Rathi's Personal Website">
+        <meta name="author" content="Deepanshu Rathi">
+    
+        <!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
+        <meta property="og:site_name" content="" /> <!-- website name -->
+        <meta property="og:site" content="" /> <!-- website link -->
+        <meta property="og:title" content=""/> <!-- title shown in the actual shared post -->
+        <meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
+        <meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
+        <meta property="og:url" content="" /> <!-- where do you want your post to link to -->
+        <meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+    
+        <!-- Webpage Title -->
+        <title>Decomposing Microservices</title>
+        
+        <!-- Styles -->
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@600&display=swap" rel="stylesheet">
+        <link href="../css/bootstrap.css" rel="stylesheet">
+        <link href="../css/fontawesome-all.css" rel="stylesheet">
+        <link href="../css/styles.css" rel="stylesheet">
+        <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=60ec88bb76fa40001968a116&product=sticky-share-buttons" async="async"></script>
+        <!-- Favicon  -->
+        <link rel="icon" href="images/dev.jpg">
+    </head>
+
+    <body data-spy="scroll" data-target=".fixed-top">
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark">
+            <div class="container">
+                
+                <!-- Image Logo -->
+                <!-- <a class="navbar-brand logo-image" href="index.html"><img src="images/logo.svg" alt="alternative"></a>   -->
+
+                <!-- Text Logo - Use this if you don't have a graphic logo -->
+                <a class="navbar-brand logo-text page-scroll" href="../index.html">Deepanshu Rathi</a>
+
+                <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link page-scroll" href="../index.html#header">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link page-scroll" href="../index.html#about">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link page-scroll" href="../index.html#journey">My Journey</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link page-scroll" href="../shorts.html">Shorts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link page-scroll" href="../techarticles.html">Tech Articles</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link page-scroll" href="../index.html#contact">Connect with Me!</a>
+                        </li>
+                    </ul>
+                </div> <!-- end of navbar-collapse -->
+            </div> <!-- end of container -->
+        </nav> <!-- end of navbar -->
+        <!-- end of navigation -->
+
+        <header class="ex-header basic-1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-10 offset-xl-1">
+                        <h1>Decomposing Microservices</h1>
+                    </div> <!-- end of col -->
+                </div> <!-- end of row -->
+            </div> <!-- end of container -->
+        </header>
+
+        <div class="ex-basic-1 pt-5 pb-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-10 offset-xl-1">
+                        <div class="sharethis-sticky-share-buttons"></div>
+                        <p>This article can be interpreted as a summary or <i>what i learnt</i> about defining an application's microservcie architecture from Chris Richardson's <i>Microservices Patterns</i> book. I'd highly recommend this book to every software engineer who's interested in understanding microservices at much deeper as well as broader level. Therefore, I'd start the article with an amazing and my favorite sentence from the book</p>
+                        <p><b><i>"Like much of the software development, defining an architecture is more art than science"</i></b></p>
+                        <p>An application have it's own set of requirements that it must fulfil, so the first step in defining it's architecture is identifying the key requests. To simplify the description of these requests, we'd use <i>System Operations</i> and they will be derived from the requirements. A system operation is either a </p>
+                        <ul>
+                            <li><i>command</i>, which creates, updates and deletes data, or a</li>
+                            <li><i>query</i>, which retrieves data</li>
+                        </ul>
+                        <p>The next step in this process is to utilize these system operations to determine the decomposition into services. There are 2 strategies here which can be applied here </p> 
+                        <ul>
+                            <li>define services according to business capabilities</li>
+                            <li>define services by decomposing into sub-domains</li>
+                        </ul>
+
+                        <h5><i>Identifying the System Operations</i></h5>
+                        <p>System Operations are derived from application's requirements using a two-step process. The first step is to create a high-level domain model and the next is to define the system operations in terms of domain model. We'll try to approach this using this AddToCart user scenario as an example - </p> 
+                        <p><i>"As a Customer, I want to select a car from the menu and add it to the shopping cart "</i></p>
+                        <p>The domain model is primarily derived from the nouns of functional requirements, and the system operations are derived mostly from the verbs.</p>
+                        <p><b>Creating a high-level domain model</b></p>
+                        <p>The Purpose of sketching a high-level domain model is to define the vocabulary for describing the behavior of system operations. It is created using standard techniques such as analyzing the nouns in the stories and scenarios.</p>
+                        <p>The nouns in the AddToCart scenario hints at existence of various classes like Customer, Car, Menu, Order. We can define responsibilities of these classes as well :</p>
+                        <ul>
+                            <li>Customer - A customer who places the order</li>
+                            <li>Shopping Cart - A cart for the customer to keep the items they want to purchase.</li>
+                            <li>Car - Component of the Cart and Menu</li>
+                            <li>Menu - A Menu of the Cars</li>
+                        </ul>
+                        <p><b>Defining System Operations</b></p>
+                        <p>Once our high-level domain model is ready, we should move on to identifying the requests that the application must handle. A good starting point for that would be to analyze verbs in the AddToCart user scenario. And it clearly suggests that the system must provide a 'addToCart' (command) and 'showAvailableCars' (query) operation.</p>
+                        <p>A command has a specification that defines it's parameters, return value, pre-conditions and post-conditions in terms of domain model classes. Let's take a look at addToCart() system operation :</p>
+
+                        <p>Operation - addToCart (customerId, Car)<br>
+                            Returns - shoppingCartId<br>
+                            Preconditions - <br>
+                                - The customer exists and is eligible for shopping<br>
+                                - The car must be in stock<br>
+                            Postconditions - <br>
+                                - Shopping Cart's total amount is updated<br>
+                                - Shopping Cart's total items are updated
+                        </p>
+                        <p>Most of the time, commands are more architecturally relevant, but sometimes queries are also important. Here, showAvailableCars is also architecturally significant, It's a complex query involving filters like availability, geolocation and has to provide data in a sorted order of popularity, pricing etc. Hence, this makes it performance-critical as it will be executed each time a customer wants to add items in their shopping cart.</p>
+                        <p>Now that we've defined our system operations, let's move onto identifying application's services. Let's look at the first strategy, which defines services corresponding to business capabilities.</p>
+
+                        <h5><i>Define Services according to business capabilities</i></h5>
+                        <p>An organization's business capabilities can be identifies by analyzing the organization's purpose, structure and business processes. Each business capabilities can be thought of as a service, which consists of various components, including inputs, outputs and SLAs (Service Level Agreements). For example, The business capabilities  for an online store include :</p>
+                        <ul>
+                            <li>Product Catalogue Management</li>
+                            <li>Inventory Management</li>
+                            <li>Customer Management</li>
+                            <li>Order Management</li>
+                            <li>...</li>
+                        </ul>
+                        <p>Once you've defined the business capabilities, you then define a service for each capability or group of related capabilities. A key benefit of organizing services around capabilities  is that they're stable, thus making the architecture stable as well. Now, even when the aspects of business changes, only the individual components evolve, but the architecture remains unchanged.</p>
+                        <h5><i>Define Services according to sub-domains</i></h5>
+                        <p>A domain model captures knowledge about a domain in a form that can be used to solve problems within that domain. It defines the vocabulary used within the team, and is closely mirrored in the design and implementation of the application. DDD (Domain Driven Design) refers to the application’s problem space - the business - as the domain. A domain is consists of multiple subdomains. Each subdomain corresponds to a different part of the business. For example, in a food ordering app, the subdomains can be </p>
+                        <ul>
+                            <li>Order Taking</li>
+                            <li>Delivery Management</li>
+                            <li>Kitchen Management</li>
+                            <li>Order Management</li>
+                            <li>...</li>
+                        </ul>
+                        <p>DDD calls the scope of a domain model a bounded context. A bounded context is a service or possibly a set of services. We can create a microservice architecture by applying DDD and defining a service for each subdomain. The DDD concept of subdomains and bounded contexts maps nicely to services within a microservice architecture.</p>
+                    </div>    
+                </div> <!-- end of row -->
+            </div> <!-- end of container -->
+        </div> <!-- end of ex-basic-1 -->
+        <!-- end of basic -->
+        
+        <!-- Footer -->
+        <div class="footer bg-gray">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2 style="color: aliceblue; padding-bottom: 2rem;">Connect with me!</h5>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="social-container">
+                            <span class="fa-stack">
+                                <a href="https://www.facebook.com/deepanshurathi553">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-facebook-f fa-stack-1x"></i>
+                                </a>
+                            </span>
+                            <span class="fa-stack">
+                                <a href="https://twitter.com/confusednstuff1">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-twitter fa-stack-1x"></i>
+                                </a>
+                            </span>
+                            <span class="fa-stack">
+                                <a href="https://github.com/deepanshurathi553">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-github fa-stack-1x"></i>
+                                </a>
+                            </span>
+                            <span class="fa-stack">
+                                <a href="https://www.linkedin.com/in/deepanshurathi553/">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-linkedin fa-stack-1x"></i>
+                                </a>
+                            </span>
+                            <span class="fa-stack">
+                                <a href="mailto:drathi556@gmail.com">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fas fa-envelope fa-stack-1x"></i>
+                                </a>
+                            </span>
+                        </div> <!-- end of social-container -->
+                    </div> <!-- end of col -->
+                </div> <!-- end of row -->
+            </div> <!-- end of container -->
+        </div> <!-- end of footer -->  
+        <!-- end of footer -->
+        
+            <!-- Copyright -->
+        <div class="copyright bg-gray">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p class="p-small">Copyright © <a class="no-line" href="#your-link">Deepanshu Rathi</a></p>
+                    </div> <!-- end of col -->
+                </div> <!-- enf of row -->
+            </div> <!-- end of container -->
+            
+        </div> <!-- end of copyright --> 
+    <!-- end of copyright -->
+    <!-- Scripts -->
+        <script src="../js/jquery.min.js"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
+        <script src="../js/bootstrap.min.js"></script> <!-- Bootstrap framework -->
+        <script src="../js/jquery.easing.min.js"></script> <!-- jQuery Easing for smooth scrolling between anchors -->
+        <script src="../js/scripts.js"></script> <!-- Custom scripts --> 
+    </body>
+</html>

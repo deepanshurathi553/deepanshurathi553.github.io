@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        
+        <!-- SEO Meta Tags -->
+        <meta name="description" content="Deepanshu Rathi's Personal Website">
+        <meta name="author" content="Deepanshu Rathi">
+    
+        <!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
+        <meta property="og:site_name" content="" /> <!-- website name -->
+        <meta property="og:site" content="" /> <!-- website link -->
+        <meta property="og:title" content=""/> <!-- title shown in the actual shared post -->
+        <meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
+        <meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
+        <meta property="og:url" content="" /> <!-- where do you want your post to link to -->
+        <meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+    
+        <!-- Webpage Title -->
+        <title>Decomposing Microservices</title>
+        
+        <!-- Styles -->
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@600&display=swap" rel="stylesheet">
+        <link href="../css/bootstrap.css" rel="stylesheet">
+        <link href="../css/fontawesome-all.css" rel="stylesheet">
+        <link href="../css/styles.css" rel="stylesheet">
+        <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=60ec88bb76fa40001968a116&product=sticky-share-buttons" async="async"></script>
+        <!-- Favicon  -->
+        <link rel="icon" href="images/dev.jpg">
+    </head>
+
+    <body data-spy="scroll" data-target=".fixed-top">
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark">
+            <div class="container">
+                
+                <!-- Image Logo -->
+                <!-- <a class="navbar-brand logo-image" href="index.html"><img src="images/logo.svg" alt="alternative"></a>   -->
+
+                <!-- Text Logo - Use this if you don't have a graphic logo -->
+                <a class="navbar-brand logo-text page-scroll" href="../index.html">Deepanshu Rathi</a>
+
+                <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link page-scroll" href="../index.html#header">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link page-scroll" href="../index.html#about">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link page-scroll" href="../index.html#journey">My Journey</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link page-scroll" href="../shorts.html">Shorts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link page-scroll" href="../techarticles.html">Tech Articles</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link page-scroll" href="../index.html#contact">Connect with Me!</a>
+                        </li>
+                    </ul>
+                </div> <!-- end of navbar-collapse -->
+            </div> <!-- end of container -->
+        </nav> <!-- end of navbar -->
+        <!-- end of navigation -->
+
+        <header class="ex-header basic-1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-10 offset-xl-1">
+                        <h1>Decomposing Microservices</h1>
+                    </div> <!-- end of col -->
+                </div> <!-- end of row -->
+            </div> <!-- end of container -->
+        </header>
+
+        <div class="ex-basic-1 pt-5 pb-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-10 offset-xl-1">
+                        <div class="sharethis-sticky-share-buttons"></div>
+                        <p>If you've written Junits in your life, you must be familiar with the Mockito Framework or any other framework and you must've used it to mock a class and define the output of certain method calls at runtime. The main advantage of using a framework like Mockito is that it greatly simplifies the development of tests for classes with external dependencies.</p>
+                            <p>Now, What if I don't use any framework? Will I still be able to mock the behaviours of dependent classes? I'll try to write a unit test for the below piece of code without Mockito and find out.</p>
+                            <p>Here's the code I want to test :</p>
+                            <pre style="font-family: Andale Mono, Lucida Console, Monaco, fixed, monospace; color: #000000; background-color: lightgray ;font-size: 16px;border: 1px solid black;line-height: 14px;padding: 5px; overflow: auto; width: 100%"><code>
+public class IncrementNumber {
+
+    public int getIncrementedNumber(int num){
+        DBConn conn = getConn();        
+        return conn.getValue(num);
+    }
+                            
+    DBConn getConn(){
+        return DBConnFactory.establishConnection();
+    }
+}
+                            </code></pre>
+                            <p>I want to test the <i>'getIncrementedNumber'</i> method in this class but we can see how it's dependent on Database Connection to return the output. We can't establish the connection in test class and make it call the actual Database just to test the behaviour of the method, right? So, How do we mock the behaviour?</p> 
+                            <p>We'll use one of the most beautiful property of Java, Polymorphism. Polymorphism allows us to use method overriding. The version of a method that is executed will be determined by the object that is used to invoke it. If an object of a parent class is used to invoke the method, then the version in the parent class will be executed, but if an object of the subclass is used to invoke the method, then the version in the child class will be executed. Are you getting the hint now? That's exactly what we'll profit off from to solve the above problem statement.</p> 
+                            <p>We'll create a child class IncrementNumber and override <i>'getConn'</i> to return my own mock for DBConn. That looks like this : </p>
+                            <pre style="font-family: Andale Mono, Lucida Console, Monaco, fixed, monospace; color: #000000; background-color: lightgray ;font-size: 16px;border: 1px solid black;line-height: 14px;padding: 5px; overflow: auto; width: 100%"><code>
+public class MockIncrementNumber extends IncrementNumber{
+
+    MockDBConn conn;
+
+    @Override
+    DBConn getConn(){
+        this.conn = new MockDBConn();
+        return this.conn;
+    }
+}
+                            </code></pre>
+                            
+                            <p>The MockDBConn class going to capture the argument passed in <i>'getValue'</i> and return the output, so that needs to be overridden as well. This  is how it looks : </p>
+
+                            <pre style="font-family: Andale Mono, Lucida Console, Monaco, fixed, monospace; color: #000000; background-color: lightgray ;font-size: 16px;border: 1px solid black;line-height: 14px;padding: 5px; overflow: auto; width: 100%"><code>
+public class MockDBConn extends DBConn{
+
+    @Override
+    public int getValue(int param){
+        return param + 4;
+    }
+}
+                            </code></pre>
+                            
+                            <p>Now, with all things in place, The unit test looks like this :</p>
+                            <pre style="font-family: Andale Mono, Lucida Console, Monaco, fixed, monospace; color: #000000; background-color: lightgray ;font-size: 16px;border: 1px solid black;line-height: 14px;padding: 5px; overflow: auto; width: 100%"><code>
+@Test
+public void shouldReturnIncrementedValue{
+    IncrementNumber inc = new MockIncrementNumber();
+    assert inc.getIncrementedNumber(4) == 8;
+}
+                            </code></pre>
+                            
+                            <p>We've used basic object-oriented principles to solve this problem. We were able to create the child mock classes and override original classes behaviour easily. But, We had to write more code when we went through this route for mocking behaviours. This could be advantageous as well as disadvantageous. It's probably good since mock classes are visible and I don't have to visualize what they're doing or go through their documentation. I don't mean to say we should never use a mocking framework, I am just saying it is a reasonable choice sometimes to not use one. Also, These frameworks are another dependency on your project, and that adds it's own maintainability issues and restricts change. That being said, If it's easier to use a mocking framework, do that. If not, use this approach instead.</p>
+                        </div>    
+                </div> <!-- end of row -->
+            </div> <!-- end of container -->
+        </div> <!-- end of ex-basic-1 -->
+        <!-- end of basic -->
+        
+        <!-- Footer -->
+        <div class="footer bg-gray">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2 style="color: aliceblue; padding-bottom: 2rem;">Connect with me!</h5>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="social-container">
+                            <span class="fa-stack">
+                                <a href="https://www.facebook.com/deepanshurathi553">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-facebook-f fa-stack-1x"></i>
+                                </a>
+                            </span>
+                            <span class="fa-stack">
+                                <a href="https://twitter.com/confusednstuff1">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-twitter fa-stack-1x"></i>
+                                </a>
+                            </span>
+                            <span class="fa-stack">
+                                <a href="https://github.com/deepanshurathi553">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-github fa-stack-1x"></i>
+                                </a>
+                            </span>
+                            <span class="fa-stack">
+                                <a href="https://www.linkedin.com/in/deepanshurathi553/">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-linkedin fa-stack-1x"></i>
+                                </a>
+                            </span>
+                            <span class="fa-stack">
+                                <a href="mailto:drathi556@gmail.com">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fas fa-envelope fa-stack-1x"></i>
+                                </a>
+                            </span>
+                        </div> <!-- end of social-container -->
+                    </div> <!-- end of col -->
+                </div> <!-- end of row -->
+            </div> <!-- end of container -->
+        </div> <!-- end of footer -->  
+        <!-- end of footer -->
+        
+            <!-- Copyright -->
+        <div class="copyright bg-gray">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p class="p-small">Copyright © <a class="no-line" href="#your-link">Deepanshu Rathi</a></p>
+                    </div> <!-- end of col -->
+                </div> <!-- enf of row -->
+            </div> <!-- end of container -->
+            
+        </div> <!-- end of copyright --> 
+    <!-- end of copyright -->
+    <!-- Scripts -->
+        <script src="../js/jquery.min.js"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
+        <script src="../js/bootstrap.min.js"></script> <!-- Bootstrap framework -->
+        <script src="../js/jquery.easing.min.js"></script> <!-- jQuery Easing for smooth scrolling between anchors -->
+        <script src="../js/scripts.js"></script> <!-- Custom scripts --> 
+    </body>
+</html>

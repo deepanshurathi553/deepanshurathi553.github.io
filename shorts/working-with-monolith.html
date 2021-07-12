@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        
+        <!-- SEO Meta Tags -->
+        <meta name="description" content="Deepanshu Rathi's Personal Website">
+        <meta name="author" content="Deepanshu Rathi">
+    
+        <!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
+        <meta property="og:site_name" content="" /> <!-- website name -->
+        <meta property="og:site" content="" /> <!-- website link -->
+        <meta property="og:title" content=""/> <!-- title shown in the actual shared post -->
+        <meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
+        <meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
+        <meta property="og:url" content="" /> <!-- where do you want your post to link to -->
+        <meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+    
+        <!-- Webpage Title -->
+        <title>Working with Monolithic Codebase</title>
+        
+        <!-- Styles -->
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@600&display=swap" rel="stylesheet">
+        <link href="../css/bootstrap.css" rel="stylesheet">
+        <link href="../css/fontawesome-all.css" rel="stylesheet">
+        <link href="../css/styles.css" rel="stylesheet">
+        <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=60ec88bb76fa40001968a116&product=sticky-share-buttons" async="async"></script>
+        <!-- Favicon  -->
+        <link rel="icon" href="images/dev.jpg">
+    </head>
+
+    <body data-spy="scroll" data-target=".fixed-top">
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark">
+            <div class="container">
+                
+                <!-- Image Logo -->
+                <!-- <a class="navbar-brand logo-image" href="index.html"><img src="images/logo.svg" alt="alternative"></a>   -->
+
+                <!-- Text Logo - Use this if you don't have a graphic logo -->
+                <a class="navbar-brand logo-text page-scroll" href="../index.html">Deepanshu Rathi</a>
+
+                <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link page-scroll" href="../index.html#header">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link page-scroll" href="../index.html#about">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link page-scroll" href="../index.html#journey">My Journey</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link page-scroll" href="../shorts.html">Shorts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link page-scroll" href="../techarticles.html">Tech Articles</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link page-scroll" href="../index.html#contact">Connect with Me!</a>
+                        </li>
+                    </ul>
+                </div> <!-- end of navbar-collapse -->
+            </div> <!-- end of container -->
+        </nav> <!-- end of navbar -->
+        <!-- end of navigation -->
+
+        <header class="ex-header basic-1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-10 offset-xl-1">
+                        <h1>My experience working with monolithic codebase</h1>
+                        <p class="shorts-meta">July 10, 2021 | 4 min read</p>
+                    </div> <!-- end of col -->
+                </div> <!-- end of row -->
+            </div> <!-- end of container -->
+        </header>
+
+        <div class="ex-basic-1 pt-5 pb-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-10 offset-xl-1">
+                        <div class="sharethis-sticky-share-buttons"></div>
+                        <p>There are dozens of articles or books which can tell you the differences between a monolithic architecture vs a microservices architecture, Why and How one is better than the other, etc. But I won't try to replicate that here.  The intention for this short is to share my experience working with a monolithic codebase and how I feel about it after working on it for a significant amount of time. </p>
+                        <p>When I started my career, I had no idea about Software Development Life Cycle (SDLC), Version Control, Coding Styles, Best practices, etc.  I started with almost zero knowledge about How software gets built, packaged, deployed, and made accessible to the world, and then I was introduced to this super big codebase that makes a lot of money and it's all there in one place. I was amazed at first with the fact that I didn't need to understand the whole of it to get my work done and it felt really great to add Changelist #20xxx021 to this giant codebase.</p>
+                        <p>But after a while when I became familiar with the process of making or adding changes, building the project, testing it on the local server, I tried to understand what am I learning or How much I have developed just by working on this, excluding what I learned from talking to others. This is how my average day looked like after few  months of being there :</p>
+                        <img class="image-daily-cycle" src="../images/dailycycle.png" alt="Daily Cycle">
+                        <p>See, How repetitive it gets just in 1 day, and that too at the time when I'm not writing any API or building a new UI component. I tried to understand why this is like that, Shouldn't this whole process must be really exciting and not nerve-wracking, I decided to deep dive into this codebase.  </p> 
+                        <p>The monolithic codebase has more than 200 modules and more keeps getting added to it, and most of them  (let's call them product modules) are tightly coupled with some of them (let's call them core modules). And between these core modules, there is extremely tight coupling, at a level that nobody might be able to decompose it, and it could become a whole different project costing significant money and resources to achieve this. Also, Each product's module(s)  were dependent on these core modules in a very different fashion and were writing their own custom logics as well into these core modules, I guess I covered it when I said "extreme" tight coupling. Now, so what if they were tightly coupled, I just had to make changes in my teams' modules and move on right? NO! You have to include these modules into your build file as well because a lot of code gets generated with the XML Definitions you wrote. Hence, You include these modules for the build as well and the build time really shoots up to more than an hour sometimes and heats up your 32 GB RAM Macbook Pro to the point you can't hold it for 2 seconds. Eventually, I found some workarounds to not repeat the build cycle each time, but not a day passed by when I didn't run full build.</p> 
+                        <img class="image-code-compiling" src="../images/codecompiling.png" alt="ThatMeme">
+                        <p>Now, When things are this fragile not everyone gets to work on the core modules,  you use them to build your features on top of that, which then makes your work configuration based and pretty boring as well. Both UI as well as backend becomes some addition and removal of lines here and there. <br>
+                        For Example - <br>
+                        You want to add an error code, Go to the A file in the B module and add it on line 1347. <br>
+                        You want to expose your API, These are the set of files you go to and make an entry. And don't you dare forget even one of them or make a small error or miss adding that module for the build.</p> 
+                        
+                        <p>It was not like I always had configuration based work, I asked my manager to let me work on some API and luckily he took care of it. While I was working on the implementation of this API, I had the chance to work with one of my mentor who's really experienced and he introduced me to the world of Design Patterns, Thread Safety, OO Principles, SOLID, How to properly write JUnits, How to do code reviews and lots of other stuff about coding culture, architectures and exciting things happening around the world. All of this really pushed me and helped me realize my passion for software development or in broader terms, Technology.</p>
+                        
+                        <p>Now, with all of this new knowledge, I starting looking at things in a really different way, It was not just "I want to finish my user stories as fast as possible", It became "I want to pick up the best possible user stories which helps me learn as much as possible". So, after a certain point in time, There were no such user stories left in my team, and being frustrated with the build cycle and lack of innovation, I decided to move on.</p>
+                        
+                        <p>However, This doesn't mean I have regrets working at this company, as it taught me a lot and helped me find good mentors and friends for life. But I aspire to <b>BE MORE.</b></p>
+                    </div>    
+                </div> <!-- end of row -->
+            </div> <!-- end of container -->
+        </div> <!-- end of ex-basic-1 -->
+        <!-- end of basic -->
+        
+        <!-- Footer -->
+        <div class="footer bg-gray">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2 style="color: aliceblue; padding-bottom: 2rem;">Connect with me!</h5>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="social-container">
+                            <span class="fa-stack">
+                                <a href="https://www.facebook.com/deepanshurathi553">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-facebook-f fa-stack-1x"></i>
+                                </a>
+                            </span>
+                            <span class="fa-stack">
+                                <a href="https://twitter.com/confusednstuff1">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-twitter fa-stack-1x"></i>
+                                </a>
+                            </span>
+                            <span class="fa-stack">
+                                <a href="https://github.com/deepanshurathi553">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-github fa-stack-1x"></i>
+                                </a>
+                            </span>
+                            <span class="fa-stack">
+                                <a href="https://www.linkedin.com/in/deepanshurathi553/">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-linkedin fa-stack-1x"></i>
+                                </a>
+                            </span>
+                            <span class="fa-stack">
+                                <a href="mailto:drathi556@gmail.com">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fas fa-envelope fa-stack-1x"></i>
+                                </a>
+                            </span>
+                        </div> <!-- end of social-container -->
+                    </div> <!-- end of col -->
+                </div> <!-- end of row -->
+            </div> <!-- end of container -->
+        </div> <!-- end of footer -->  
+        <!-- end of footer -->
+        
+            <!-- Copyright -->
+        <div class="copyright bg-gray">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p class="p-small">Copyright © <a class="no-line" href="#your-link">Deepanshu Rathi</a></p>
+                    </div> <!-- end of col -->
+                </div> <!-- enf of row -->
+            </div> <!-- end of container -->
+            
+        </div> <!-- end of copyright --> 
+    <!-- end of copyright -->
+    <!-- Scripts -->
+        <script src="../js/jquery.min.js"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
+        <script src="../js/bootstrap.min.js"></script> <!-- Bootstrap framework -->
+        <script src="../js/jquery.easing.min.js"></script> <!-- jQuery Easing for smooth scrolling between anchors -->
+        <script src="../js/scripts.js"></script> <!-- Custom scripts --> 
+    </body>
+</html>
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+ 
+        <title>Shorts | Deepanshu Rathi</title>
+        <link rel="icon" href="../../assets/dev.jpg">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="../../css/shorts.css">
+        <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=603dd4bf9269c20011a29b58&product=sticky-share-buttons" async="async"></script>
+    </head>
+
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <!-- <a class="navbar-brand" href="#">Deepanshu Rathi</a> -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../index.html">Home</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="../shorts.html">Shorts <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../techarticles.html">Tech Articles</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../resume.html">Resume</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <div class="container-fluid">
+            <div class="row main-wrapper">
+                <div class="sharethis-sticky-share-buttons"></div>
+                <div class="col-2 left-panel">
+                </div>
+                <div class="col-7 shorts-main-content">
+                    <article class="shorts-article">
+                        <header class="shorts-heading">
+                            <h1 class="shorts-name">My experience working with Monolithic Codebase</h1>
+                            <p class="shorts-meta">March 7, 2021 | 4 min read</p>
+                        </header>
+                        <div class="shorts-content">
+                            <p>There are dozens of articles or books which can tell you the differences between a monolithic architecture vs a microservices architecture, Why and How one is better than the other, etc. But I won't try to replicate that here.  The intention for this short is to share my experience working with a monolithic codebase and how I feel about it after working on it for a significant amount of time. </p>
+                            <p>When I started my career, I had no idea about Software Development Life Cycle (SDLC), Version Control, Coding Styles, Best practices, etc.  I started with almost zero knowledge about How software gets built, packaged, deployed, and made accessible to the world, and then I was introduced to this super big codebase that makes a lot of money and it's all there in one place. I was amazed at first with the fact that I didn't need to understand the whole of it to get my work done and it felt really great to add Changelist #20xxx021 to this giant codebase.</p>
+                            <p>But after a while when I became familiar with the process of making or adding changes, building the project, testing it on the local server, I tried to understand what am I learning or How much I have developed just by working on this, excluding what I learned from talking to others. This is how my average day looked like after few  months of being there :</p>
+                            <img class="image-daily-cycle" src="../../assets/dailycycle.png" alt="Daily Cycle">
+                            <p>See, How repetitive it gets just in 1 day, and that too at the time when I'm not writing any API or building a new UI component. I tried to understand why this is like that, Shouldn't this whole process must be really exciting and not nerve-wracking, I decided to deep dive into this codebase.  </p> 
+                            <p>The monolithic codebase has more than 200 modules and more keeps getting added to it, and most of them  (let's call them product modules) are tightly coupled with some of them (let's call them core modules). And between these core modules, there is extremely tight coupling, at a level that nobody might be able to decompose it, and it could become a whole different project costing significant money and resources to achieve this. Also, Each product's module(s)  were dependent on these core modules in a very different fashion and were writing their own custom logics as well into these core modules, I guess I covered it when I said "extreme" tight coupling. Now, so what if they were tightly coupled, I just had to make changes in my teams' modules and move on right? NO! You have to include these modules into your build file as well because a lot of code gets generated with the XML Definitions you wrote. Hence, You include these modules for the build as well and the build time really shoots up to more than an hour sometimes and heats up your 32 GB RAM Macbook Pro to the point you can't hold it for 2 seconds. Eventually, I found some workarounds to not repeat the build cycle each time, but not a day passed by when I didn't run full build.</p> 
+                            <img class="image-code-compiling" src="../../assets/codecompiling.png" alt="ThatMeme">
+                            <p>Now, When things are this fragile not everyone gets to work on the core modules,  you use them to build your features on top of that, which then makes your work configuration based and pretty boring as well. Both UI as well as backend becomes some addition and removal of lines here and there. <br>
+                            For Example - <br>
+                            You want to add an error code, Go to the A file in the B module and add it on line 1347. <br>
+                            You want to expose your API, These are the set of files you go to and make an entry. And don't you dare forget even one of them or make a small error or miss adding that module for the build.</p> 
+                            
+                            <p>It was not like I always had configuration based work, I asked my manager to let me work on some API and luckily he took care of it. While I was working on the implementation of this API, I had the chance to work with one of my mentor who's really experienced and he introduced me to the world of Design Patterns, Thread Safety, OO Principles, SOLID, How to properly write JUnits, How to do code reviews and lots of other stuff about coding culture, architectures and exciting things happening around the world. All of this really pushed me and helped me realize my passion for software development or in broader terms, Technology.</p>
+                            
+                            <p>Now, with all of this new knowledge, I starting looking at things in a really different way, It was not just "I want to finish my user stories as fast as possible", It became "I want to pick up the best possible user stories which helps me learn as much as possible". So, after a certain point in time, There were no such user stories left in my team, and being frustrated with the build cycle and lack of innovation, I decided to move on.</p>
+                            
+                            <p>However, This doesn't mean I have regrets working at this company, as it taught me a lot and helped me find good mentors and friends for life. But I aspire to <b>BE MORE.</b></p>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-3 right-panel">
+                    <h4>You might also like :</h4>
+                    <ul class="suggestions">
+                        <li>
+                            <a href="how-a-good-mentor-shapes-your-life.html">How does a good mentor helps you succeed</a>
+                        </li>
+                        <li>
+                            <a href="are-you-a-code-monkey.html">Are you a Code Monkey? If yes, Please stop!</a>
+                        </li>
+                    </ul>
+                    <p>Do you have feedback for this article? Reply to this <a href="">post</a></p>
+                </div>
+            </div>
+            
+        </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </body>
+    
+</html>
